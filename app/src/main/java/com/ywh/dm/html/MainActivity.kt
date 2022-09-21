@@ -11,7 +11,8 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     //    var str = "<span style=text-decoration:underline;color:#ff00ff;text-indent:2em>哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈<span style=text-decoration:underline;color:#ff0000> 内层</span></span>"
-    var str = "<span style=text-decoration:underline;color:#ff00ff;>哈哈哈哈哈哈啊哈哈<br></br><img src=http://res.damieapp.com/drama/FkMtEoABb9SKEn1lvrn4TmclIRxj>\n好好好</span>"
+    //    var str = "<span style=text-decoration:underline;color:#ff00ff;>哈哈哈哈哈哈啊哈哈<br></br><img src=http://res.damieapp.com/drama/FkMtEoABb9SKEn1lvrn4TmclIRxj>\n好好好</span>"
+    var str = "<span style=text-decoration:underline;color:#ff00ff;><span style=text-decoration:line-through;color:#ff0000;>嵌套span</span></span>"
     private var drawableMap = HashMap<String, Drawable>()
     private val imageGetter by lazy {
         object : ImageGetter {
@@ -45,10 +46,10 @@ class MainActivity : AppCompatActivity() {
                 val drawable = Drawable.createFromStream(URL(url).openStream(), "")
                 runOnUiThread {
                     if (drawable != null) {
-//                        val picW = drawable.intrinsicWidth.toFloat()
-//                        val picH = drawable.intrinsicHeight.toFloat()
-//                        val width = MetricsUtil.WidthPixels
-//                        drawable.setBounds(0, 0, width, ((picH / picW) * width).toInt())
+                        //                        val picW = drawable.intrinsicWidth.toFloat()
+                        //                        val picH = drawable.intrinsicHeight.toFloat()
+                        //                        val width = MetricsUtil.WidthPixels
+                        //                        drawable.setBounds(0, 0, width, ((picH / picW) * width).toInt())
                         drawableMap[url] = drawable
                         setHtmlData()
                     }
