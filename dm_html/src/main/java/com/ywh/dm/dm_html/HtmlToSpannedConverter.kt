@@ -254,10 +254,21 @@ internal class HtmlToSpannedConverter(
             val src = attributes.getValue("", "src")
             var d: Drawable? = null
             if (img != null) {
-                d = img.getDrawable(src) ?: Resources.getSystem().getDrawable(img.defaultDrawableResource())
+                d = img.getDrawable(src) ?: img.defaultDrawable()
             }
             if (d != null) {
-                d.setBounds(0, 0, d.intrinsicWidth, d.intrinsicHeight)
+                if (img == null || img.drawableWidth() == -1) {
+                    d.setBounds(0, 0, d.intrinsicWidth, d.intrinsicHeight)
+                } else {
+                    val imageGetterWidth = img.drawableWidth()
+                    val width = d.intrinsicWidth
+                    val height = d.intrinsicHeight
+                    if (height > 0 && width > 0) {
+                        d.setBounds(0, 0, imageGetterWidth, (imageGetterWidth * height.toFloat() / width).toInt())
+                    } else {
+                        d.setBounds(0, 0, d.intrinsicWidth, d.intrinsicHeight)
+                    }
+                }
                 val len = text.length
                 text.append("\uFFFC")
                 text.setSpan(
@@ -404,7 +415,9 @@ internal class HtmlToSpannedConverter(
         } else if (tag.length == 2 && tag[0].lowercaseChar() == 'h' && tag[1] >= '1' && tag[1] <= '6') {
             startHeading(mSpannableStringBuilder, attributes, tag[1] - '1')
         } else if (tag.equals("img", ignoreCase = true)) {
+            mSpannableStringBuilder.append("\n")
             startImg(mSpannableStringBuilder, attributes, mImageGetter)
+            mSpannableStringBuilder.append("\n")
         } else mTagHandler?.handleTag(true, tag, mSpannableStringBuilder, mReader)
     }
 

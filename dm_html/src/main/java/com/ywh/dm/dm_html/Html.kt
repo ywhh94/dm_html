@@ -24,7 +24,10 @@ object Html {
          * its bounds set.
          */
         fun getDrawable(source: String?): Drawable?
-        fun defaultDrawableResource(): Int
+        //默认图片
+        fun defaultDrawable(): Drawable
+        //图片宽 -1 原图尺寸
+        fun drawableWidth():Int
     }
 
     /**
