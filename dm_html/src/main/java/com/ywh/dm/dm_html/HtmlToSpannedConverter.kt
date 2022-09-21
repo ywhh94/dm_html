@@ -1,4 +1,4 @@
-package com.ywh.dm.html
+package com.ywh.dm.dm_html
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -28,7 +28,6 @@ import android.text.style.SuperscriptSpan
 import android.text.style.TypefaceSpan
 import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
-import android.util.Log
 import org.ccil.cowan.tagsoup.Parser
 import org.xml.sax.Attributes
 import org.xml.sax.ContentHandler
