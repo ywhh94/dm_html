@@ -46,10 +46,6 @@ class MainActivity : AppCompatActivity() {
                 val drawable = Drawable.createFromStream(URL(url).openStream(), "")
                 runOnUiThread {
                     if (drawable != null) {
-                        //                        val picW = drawable.intrinsicWidth.toFloat()
-                        //                        val picH = drawable.intrinsicHeight.toFloat()
-                        //                        val width = MetricsUtil.WidthPixels
-                        //                        drawable.setBounds(0, 0, width, ((picH / picW) * width).toInt())
                         drawableMap[url] = drawable
                         setHtmlData()
                     }

@@ -1,11 +1,9 @@
 package com.ywh.dm.dm_html
 
-import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.text.Editable
-import android.text.Html
 import com.ywh.dm.dm_html.Html.ImageGetter
 import android.text.Html.TagHandler
 import android.text.Layout
@@ -68,14 +66,14 @@ internal class HtmlToSpannedConverter(
          */
         private var sColorMap: HashMap<String, Int>? = null
         private val textAlignPattern: Pattern?
-            private get() {
+            get() {
                 if (sTextAlignPattern == null) {
                     sTextAlignPattern = Pattern.compile("(?:\\s+|\\A)text-align\\s*:\\s*(\\S*)\\b")
                 }
                 return sTextAlignPattern
             }
         private val foregroundColorPattern: Pattern?
-            private get() {
+            get() {
                 if (sForegroundColorPattern == null) {
                     sForegroundColorPattern = Pattern.compile(
                         "(?:\\s+|\\A)color\\s*:\\s*(\\S*)\\b"
@@ -84,7 +82,7 @@ internal class HtmlToSpannedConverter(
                 return sForegroundColorPattern
             }
         private val backgroundColorPattern: Pattern?
-            private get() {
+            get() {
                 if (sBackgroundColorPattern == null) {
                     sBackgroundColorPattern = Pattern.compile(
                         "(?:\\s+|\\A)background(?:-color)?\\s*:\\s*(\\S*)\\b"
@@ -93,7 +91,7 @@ internal class HtmlToSpannedConverter(
                 return sBackgroundColorPattern
             }
         private val textDecorationPattern: Pattern?
-            private get() {
+            get() {
                 if (sTextDecorationPattern == null) {
                     sTextDecorationPattern = Pattern.compile(
                         "(?:\\s+|\\A)text-decoration\\s*:\\s*(\\S*)\\b"
@@ -102,7 +100,7 @@ internal class HtmlToSpannedConverter(
                 return sTextDecorationPattern
             }
         private val textIndentPattern: Pattern?
-            private get() {
+            get() {
                 if (sTextIndentPattern == null) {
                     sTextIndentPattern = Pattern.compile(
                         "(?:\\s+|\\A)text-indent\\s*:\\s*(\\S*)\\b"
@@ -128,7 +126,6 @@ internal class HtmlToSpannedConverter(
         }
 
         private fun startBlockElement(text: Editable, attributes: Attributes, margin: Int) {
-            val len = text.length
             if (margin > 0) {
                 appendNewlines(text, margin)
                 start(text, Newline(margin))
@@ -196,7 +193,7 @@ internal class HtmlToSpannedConverter(
          * will be the most recently added.
          */
             val objs = text.getSpans(0, text.length, kind)
-            return if (objs.size == 0) {
+            return if (objs.isEmpty()) {
                 null
             } else {
                 objs[objs.size - 1]
@@ -220,7 +217,6 @@ internal class HtmlToSpannedConverter(
         }
 
         private fun end(text: Editable, kind: Class<*>, repl: Any) {
-            val len = text.length
             val obj = getLast(text, kind)
             if (obj != null) {
                 setSpanFromMark(text, obj, repl)
@@ -477,17 +473,17 @@ internal class HtmlToSpannedConverter(
     }
 
     private val marginParagraph: Int
-        private get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH)
+        get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH)
     private val marginHeading: Int
-        private get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING)
+        get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING)
     private val marginListItem: Int
-        private get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM)
+        get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM)
     private val marginList: Int
-        private get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST)
+        get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST)
     private val marginDiv: Int
-        private get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_DIV)
+        get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_DIV)
     private val marginBlockquote: Int
-        private get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_BLOCKQUOTE)
+        get() = getMargin(Html.FROM_HTML_SEPARATOR_LINE_BREAK_BLOCKQUOTE)
 
     /**
      * Returns the minimum number of newline characters needed before and after a given block-level
@@ -578,7 +574,8 @@ internal class HtmlToSpannedConverter(
         }
     }
 
-    private fun getHtmlColor(color: String): Int {
+    private fun getHtmlColor(color: String?): Int {
+        if (color == null) return -1
         if (mFlags and Html.FROM_HTML_OPTION_USE_CSS_COLORS
             == Html.FROM_HTML_OPTION_USE_CSS_COLORS
         ) {
