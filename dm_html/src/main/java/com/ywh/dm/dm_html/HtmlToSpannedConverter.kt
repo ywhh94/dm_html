@@ -1,11 +1,12 @@
 package com.ywh.dm.dm_html
 
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.Html
-import android.text.Html.ImageGetter
+import com.ywh.dm.dm_html.Html.ImageGetter
 import android.text.Html.TagHandler
 import android.text.Layout
 import android.text.Spannable
@@ -253,18 +254,17 @@ internal class HtmlToSpannedConverter(
             val src = attributes.getValue("", "src")
             var d: Drawable? = null
             if (img != null) {
-                d = img.getDrawable(src)
+                d = img.getDrawable(src) ?: Resources.getSystem().getDrawable(img.defaultDrawableResource())
             }
-            if (d == null) {
-                //            d = Resources.getSystem().getDrawable(com.android.internal.R.drawable.unknown_image);
-                //            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            if (d != null) {
+                d.setBounds(0, 0, d.intrinsicWidth, d.intrinsicHeight)
+                val len = text.length
+                text.append("\uFFFC")
+                text.setSpan(
+                    ImageSpan(d, src), len, text.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
             }
-            val len = text.length
-            text.append("\uFFFC")
-            text.setSpan(
-                ImageSpan(d!!, src), len, text.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
         }
 
         private fun endFont(text: Editable) {
@@ -507,8 +507,6 @@ internal class HtmlToSpannedConverter(
     //行内样式
     private fun startLineCssStyle(text: Editable, attributes: Attributes) {
         val style = attributes.getValue("", "style")
-        //        val hello = attributes.getValue("", "hello")
-        //        Log.e("startCssStyle", "startCssStyle: hello:$hello")
         if (style != null) {
             val styles = style.split(";".toRegex()).toTypedArray()
             for (str in styles) {

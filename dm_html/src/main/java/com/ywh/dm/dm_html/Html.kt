@@ -1,6 +1,6 @@
 package com.ywh.dm.dm_html
 
-import android.text.Html.ImageGetter
+import android.graphics.drawable.Drawable
 import android.text.Html.TagHandler
 import android.text.Spanned
 import org.ccil.cowan.tagsoup.HTMLSchema
@@ -13,6 +13,20 @@ import org.xml.sax.SAXNotSupportedException
  * Html parser based on native Html parser.
  */
 object Html {
+    interface ImageGetter {
+        /**
+         * This method is called when the HTML parser encounters an
+         * &lt;img&gt; tag.  The `source` argument is the
+         * string from the "src" attribute; the return value should be
+         * a Drawable representation of the image or `null`
+         * for a generic replacement image.  Make sure you call
+         * setBounds() on your Drawable if it doesn't already have
+         * its bounds set.
+         */
+        fun getDrawable(source: String?): Drawable?
+        fun defaultDrawableResource(): Int
+    }
+
     /**
      * Flag indicating that texts inside &lt;p&gt; elements will be separated from other texts with
      * one newline character by default.
