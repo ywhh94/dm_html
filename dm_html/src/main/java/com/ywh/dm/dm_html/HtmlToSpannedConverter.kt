@@ -246,7 +246,7 @@ internal class HtmlToSpannedConverter(
             }
             val leadingMargin = getLast(text, LeadingMargin::class.java)
             leadingMargin?.let {
-                setSpanFromMark(text, it, LeadingMarginSpan.Standard(2 * 36, 0))
+                setSpanFromMark(text, it, LeadingMarginSpan.Standard(it.em * 36, 0))
             }
         }
 
