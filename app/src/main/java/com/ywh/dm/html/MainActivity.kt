@@ -13,13 +13,13 @@ import kotlin.concurrent.thread
 import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
-    var str = "<span style=text-decoration:underline;color:#ff00ff;text-indent:2em>哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈\n哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈<span style=text-decoration:underline;color:#ff0000> 内层</span></span>"
+//    var str = "<span style=text-decoration:underline;color:#ff00ff;text-indent:2em>哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈\n哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈<span style=text-decoration:underline;color:#ff0000> 内层</span></span>"
 
     //        var str = "<span style=text-decoration:underline;color:#ff00ff>哈哈哈哈哈哈啊哈哈<br></br><img src=http://res.damieapp.com/drama/FkMtEoABb9SKEn1lvrn4TmclIRxj>\n好好好</span>"
     //    var str = "<span style=text-decoration:underline;color:#ff00ff;><span style=text-decoration:line-through;color:#ff0000;>嵌套span</span></span>"
     //    var str = "<span style=color:#ff00ff>哈哈<br >嘿嘿</span>"
     //    var str = "<p style=\"text-decoration:underline;\"><span style=text-decoration:line-through;>123hah&nbsp;&nbsp;</span></p>"
-    //    var str = "<p>哈哈</p><p>哦哦哦</p>"
+        var str = "<p>哈哈</p>\n哦哦哦"
     private var drawableMap = HashMap<String, Drawable>()
     private val imageGetter by lazy {
         object : ImageGetter {
