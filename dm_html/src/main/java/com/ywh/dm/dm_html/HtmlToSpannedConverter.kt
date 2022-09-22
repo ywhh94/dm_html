@@ -51,6 +51,13 @@ internal class HtmlToSpannedConverter(
     private val mTagHandler: TagHandler?
     private val mFlags: Int
 
+    init {
+        mImageGetter = imageGetter
+        mTagHandler = tagHandler
+        mReader = parser
+        mFlags = flags
+    }
+
     companion object {
         private val HEADING_SIZES = floatArrayOf(
             1.5f, 1.4f, 1.3f, 1.2f, 1.1f, 1f
@@ -242,7 +249,7 @@ internal class HtmlToSpannedConverter(
             }
             val leadingMargin = getLast(text, LeadingMargin::class.java)
             leadingMargin?.let {
-                setSpanFromMark(text, it, LeadingMarginSpan.Standard(it.em * 36, 0))
+                setSpanFromMark(text, it, LeadingMarginSpan.Standard((it.em * Html.mOneChineseCharWidth).toInt(), 0))
             }
         }
 
@@ -693,10 +700,4 @@ internal class HtmlToSpannedConverter(
     private class Alignment(val mAlignment: Layout.Alignment)
     private class LeadingMargin(val em: Int)
 
-    init {
-        mImageGetter = imageGetter
-        mTagHandler = tagHandler
-        mReader = parser
-        mFlags = flags
-    }
 }

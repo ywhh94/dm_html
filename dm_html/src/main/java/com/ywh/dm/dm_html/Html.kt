@@ -73,6 +73,7 @@ object Html {
      * [Color].
      */
     const val FROM_HTML_OPTION_USE_CSS_COLORS = 0x00000100
+    private const val supportBlackSpace = true
 
     /**
      * Flags for [.fromHtml]: Separate block-level
@@ -80,7 +81,6 @@ object Html {
      * prior to N.
      */
     const val FROM_HTML_MODE_LEGACY = 0x00000000
-    private const val supportBlackSpace = true
 
     /**
      * Flags for [.fromHtml]: Separate block-level
@@ -103,11 +103,15 @@ object Html {
      *
      * This uses TagSoup to handle real HTML, including all of the brokenness found in the wild.
      */
+    var mOneChineseCharWidth = 0F
+
     @JvmOverloads
     fun fromHtml(
         source: String?, flags: Int, imageGetter: ImageGetter? = null,
-        tagHandler: TagHandler? = null
+        tagHandler: TagHandler? = null,
+        oneChineseCharWidth: Float = 0F
     ): Spanned {
+        mOneChineseCharWidth = oneChineseCharWidth
         val parser = Parser()
         try {
             parser.setProperty(Parser.schemaProperty, HtmlParser.schema)
