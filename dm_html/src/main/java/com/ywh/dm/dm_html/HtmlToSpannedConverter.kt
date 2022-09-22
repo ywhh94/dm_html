@@ -27,6 +27,7 @@ import android.text.style.SuperscriptSpan
 import android.text.style.TypefaceSpan
 import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import org.ccil.cowan.tagsoup.Parser
 import org.xml.sax.Attributes
 import org.xml.sax.ContentHandler
@@ -213,7 +214,12 @@ internal class HtmlToSpannedConverter(
             val len = text.length
             if (where != len) {
                 for (span in spans) {
-                    text.setSpan(span, where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    if (span is LeadingMarginSpan) {
+                        text.setSpan(span, where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        Log.e("setSpanFromMark", "setSpanFromMark:${text.toString()},${where},${len}")
+                    } else {
+                        text.setSpan(span, where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
                 }
             }
         }
@@ -350,7 +356,20 @@ internal class HtmlToSpannedConverter(
             if (end == start) {
                 mSpannableStringBuilder.removeSpan(obj[i])
             } else {
-                mSpannableStringBuilder.setSpan(obj[i], start, end, Spannable.SPAN_PARAGRAPH)
+                try {
+//                    val startValue = mSpannableStringBuilder[start]
+                    //                    val startValue1 = mSpannableStringBuilder[start - 1]
+                    //
+                    //                    Log.e("HtmlToSpanned", "convert:${startValue}--${startValue1},start:${start},${startValue1 == '\n'}")
+                    //                    val endValue = mSpannableStringBuilder[end]
+                    //                    val endValue1 = mSpannableStringBuilder[end - 1]
+                    //                    Log.e("HtmlToSpanned", "convert:${endValue}--${endValue1},end:${end},${endValue1 == '\n'}")
+
+                    mSpannableStringBuilder.setSpan(obj[i], start, end, Spannable.SPAN_PARAGRAPH)
+                } catch (e: Exception) {
+                    Log.e("HtmlToSpanned", "Exception:${e.message}")
+                    e.printStackTrace()
+                }
             }
         }
         return mSpannableStringBuilder
