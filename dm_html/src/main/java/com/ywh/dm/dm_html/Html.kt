@@ -122,8 +122,7 @@ object Html {
             // Should not happen.
             throw RuntimeException(e)
         }
-        val handledBlackSpace = handlerBlackSpace(source)
-        val converter = HtmlToSpannedConverter(handledBlackSpace, imageGetter, tagHandler, parser, flags)
+        val converter = HtmlToSpannedConverter(source.orEmpty(), imageGetter, tagHandler, parser, flags)
         return converter.convert()
     }
 
